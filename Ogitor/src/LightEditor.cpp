@@ -131,7 +131,7 @@ bool CLightEditor::_setPosition(OgitorsPropertyBase* property, const Ogre::Vecto
 {
     if(mHandle)
     {
-        mHandle->setPosition(position);
+        getParent()->getNode()->setPosition(position);
     }
     return true;
 }
@@ -143,7 +143,7 @@ bool CLightEditor::_setOrientation(OgitorsPropertyBase* property, const Ogre::Qu
  
     if(mHandle)
     {
-        mHandle->setDirection(direction);
+        getParent()->getNode()->setDirection(direction);
     }    
     
     mDirection->initAndSignal(direction);
@@ -158,7 +158,7 @@ bool CLightEditor::_setDirection(OgitorsPropertyBase* property, const Ogre::Vect
 
     if(mHandle)
     {
-        mHandle->setDirection(value.normalisedCopy());
+        getParent()->getNode()->setDirection(value.normalisedCopy());
         _calculateOrientation();
     }
     return true;
@@ -252,8 +252,8 @@ bool CLightEditor::load(bool async)
         mHandle = mOgitorsRoot->GetSceneManager()->createLight(mName->get());
         getParent()->getNode()->attachObject(mHandle);
 
-        mHandle->setPosition(mPosition->get());
-        mHandle->setDirection(mDirection->get());
+        getParent()->getNode()->setPosition(mPosition->get());
+        getParent()->getNode()->setDirection(mDirection->get());
         mHandle->setDiffuseColour(mDiffuse->get());
         mHandle->setSpecularColour(mSpecular->get());
         mHandle->setType((Ogre::Light::LightTypes)mLightType->get());

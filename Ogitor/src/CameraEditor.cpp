@@ -191,8 +191,9 @@ void CCameraEditor::lookAt(const Ogre::Vector3 &value)
 
     if(mHandle)
     {
-        mHandle->lookAt(value);
-        mOrientation->set(mHandle->getOrientation());
+        //mHandle->lookAt(value);
+        mHandle->getParentSceneNode()->lookAt(value);
+        mOrientation->set(mHandle->getRealOrientation());
     }
 }
 //-----------------------------------------------------------------------------------------
