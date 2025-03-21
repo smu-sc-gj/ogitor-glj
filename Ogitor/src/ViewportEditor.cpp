@@ -95,7 +95,14 @@ void CViewportEditor::renderWindowResized()
     if (mHandle && mActiveCamera) 
     {
         mActiveCamera->getCamera()->setAspectRatio((Ogre::Real)mHandle->getActualWidth() / (Ogre::Real)mHandle->getActualHeight()); 
-        mActiveCamera->getCamera()->yaw(Ogre::Radian(0));
+        //mActiveCamera->getCamera()->yaw(Ogre::Radian(0));
+        
+        Ogre::Quaternion CamOrient;
+        Ogre::Vector3 Dir = CamOrient*Ogre::Vector3::UNIT_X;
+        Ogre::Radian YawAngle = Ogre::Math::ATan2(Dir.z, Dir.x);
+        Ogre::Quaternion YawOrient(YawAngle, Ogre::Vector3::UNIT_Y);
+        
+        mActiveCamera->getCamera()->getParentSceneNode()->setOrientation(YawOrient);
     }
 }
 //-------------------------------------------------------------------------------

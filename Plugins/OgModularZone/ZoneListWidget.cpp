@@ -192,17 +192,23 @@ void ZoneListWidget::_createImages(ImageMap& retlist)
     Ogre::SceneManager *mSceneMgr = Ogre::Root::getSingletonPtr()->createSceneManager("OctreeSceneManager", "EntityTexMgr");
 
     Ogre::Light *dirl = mSceneMgr->createLight("DisplayLight");
-    dirl->setDirection(-1,-1,-1);
+    Ogre::SceneNode *dirln = mSceneMgr->createSceneNode("DisplayLightNode");
+    dirln->attachObject(dirl);
+
+    dirln->setDirection(-1,-1,-1);
     dirl->setDiffuseColour(1,1,1);
     dirl->setType(Ogre::Light::LT_DIRECTIONAL);
 
     Ogre::Camera* RTTCam = mSceneMgr->createCamera("EntityCam");
+    Ogre::SceneNode *RTTCamNode = mSceneMgr->createSceneNode("EntityCamNode");
+    RTTCamNode->attachObject(RTTCam);
+
     RTTCam->setNearClipDistance(0.01F);
     RTTCam->setFarClipDistance(0);
     RTTCam->setAspectRatio(1);
     RTTCam->setFOVy(Ogre::Degree(90));
-    RTTCam->setPosition(0,0,1);
-    RTTCam->lookAt(0,0,0);
+    RTTCamNode->setPosition(0,0,1);
+    RTTCamNode->lookAt(Ogre::Vector3(0,0,0),Ogre::Node::TS_PARENT, Ogre::Vector3::UNIT_X);
 
     Ogre::Viewport *v = rttTex->addViewport( RTTCam );
     v->setClearEveryFrame( true );
@@ -257,8 +263,8 @@ void ZoneListWidget::_createImages(ImageMap& retlist)
         //vSize.z +=vSize.x/2;
         //RTTCam->setProjectionType(Ogre::PT_ORTHOGRAPHIC);
 
-        RTTCam->setPosition(vSize.x,vSize.y,vSize.z);
-        RTTCam->lookAt(vCenter.x,vCenter.y,vCenter.z);
+        RTTCam->getParentSceneNode()->setPosition(vSize.x,vSize.y,vSize.z);
+        RTTCam->getParentSceneNode()->lookAt(vCenter,Ogre::Node::TS_PARENT, Ogre::Vector3::UNIT_X);
 
         rttTex->update();
         rttTex->copyContentsToMemory(pb, Ogre::RenderTarget::FB_FRONT);

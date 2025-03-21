@@ -72,8 +72,8 @@ ImageConverter::ImageConverter(const size_t& width/*=128*/, const size_t& height
     RTTCam->setFarClipDistance(0);
     RTTCam->setAspectRatio(1);
     RTTCam->setFOVy(Ogre::Degree(90));
-    RTTCam->setPosition(0, 0, 50);
-    RTTCam->lookAt(0, 0, 0);
+   /// RTTCam->setPosition(0, 0, 50);
+   /// RTTCam->lookAt(0, 0, 0);
     
     Ogre::Viewport *v = mRttTex->addViewport(RTTCam);
     v->setBackgroundColour(Ogre::ColourValue(1, 1, 1));

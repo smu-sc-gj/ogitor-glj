@@ -27,7 +27,7 @@ set(CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}/lib")
 #set_target_properties(Hydrax PROPERTIES FOLDER Dependencies)
 
 # Pagedgeometry
-#add_subdirectory(pagedgeometry)
+add_subdirectory(pagedgeometry)
 
 # Skyx
 #ExternalProject_Add(Skyx
